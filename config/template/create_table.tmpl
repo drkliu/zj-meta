@@ -1,0 +1,11 @@
+{{$lastColumnIndex := .lastColumnIndex}}	
+{{$hasPrimaryKeys := .table.HasPrimaryKey}}	
+{{$primaryKeySql := .table.SqlPrimaryKey}}	
+CREATE TABLE `{{.table.TableName}}` (
+{{- "" -}}
+{{range $i, $column := .table.Columns}}
+  {{$column.Sql}}
+  {{- "" -}}{{if lt $i $lastColumnIndex}},{{else if $hasPrimaryKeys}},
+  {{$primaryKeySql}}{{end}}
+{{end}}
+);
